@@ -4,7 +4,7 @@ import { FaGithubAlt, FaPlus, FaSpinner } from 'react-icons/fa';
 
 import api from '../../services/api';
 
-import { Container, Form, SubmitButton } from './styles';
+import { Container, Form, SubmitButton, List } from './styles';
 
 export default class Main extends Component {
 
@@ -15,7 +15,7 @@ export default class Main extends Component {
   };
 
   handleInputChange = e => {
-    this.setState({newRepo: e.target.value })
+    this.setState({ newRepo: e.target.value })
   }
 
   handleSubmit = async e => {
@@ -41,7 +41,7 @@ export default class Main extends Component {
 
   render() {
 
-    const { newRepo, loading } = this.state;
+    const { newRepo, repositories, loading } = this.state;
 
     return (
       <Container>
@@ -56,12 +56,23 @@ export default class Main extends Component {
             placeholder="Adicionar repositórios"
             onChange={this.handleInputChange}
             value={newRepo}
-            />
+          />
 
           <SubmitButton loading={loading}>
-            { loading ? (<FaSpinner color="#fff" size={14} />) : (<FaPlus color="#fff" size={14} />) }
+            {loading ? (<FaSpinner color="#fff" size={14} />) : (<FaPlus color="#fff" size={14} />)}
           </SubmitButton>
         </Form>
+
+
+        <List>
+          {repositories.map(repository => (
+            <li key={repository.name}>
+              {repository.name}
+              <a href="#">Detalhes</a>
+            </li>
+          ))}
+        </List>
+
       </Container>
     );
   }
