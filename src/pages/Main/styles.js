@@ -5,13 +5,19 @@ export const Form = styled.form`
   display: flex;
   flex-direction: row;
 
-  input {
-    flex: 1;
-    border: 1px solid #eee;
-    padding: 10px 15px;
-    border-radius: 4px;
-    font-size: 16px;
-  }
+
+`;
+
+export const InputText = styled.input`
+
+  flex: 1;
+  border-width: 1px;
+  border-style: solid;
+  border-color: ${props => props.error ? 'red' : '#eee'};
+  padding: 10px 15px;
+  border-radius: 4px;
+  font-size: 16px;
+
 `;
 
 const rotate = keyframes`

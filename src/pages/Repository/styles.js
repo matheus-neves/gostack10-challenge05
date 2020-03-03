@@ -75,12 +75,13 @@ export const IssueList = styled.ul`
     strong {
       font-size: 16px;
       display: flex;
+      align-items: center;
       flex-wrap: wrap;
-      margin-right: 10px;
 
       a {
         text-decoration: none;
         color: #333;
+        margin-right: 10px;
 
         &:hover {
           color: #7159c1;

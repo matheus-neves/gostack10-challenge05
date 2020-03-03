@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import api from '../../services/api';
 
 import Container from '../../components/Container';
-import { Form, SubmitButton, List } from './styles';
+import { Form, SubmitButton, List, InputText } from './styles';
 
 export default class Main extends Component {
 
@@ -15,6 +15,7 @@ export default class Main extends Component {
     newRepo: '',
     repositories: [],
     loading: false,
+    error: false
   };
 
   // carregar os dados do localStorage
@@ -42,6 +43,10 @@ export default class Main extends Component {
     this.setState({ newRepo: e.target.value })
   }
 
+  handleFocus = e => {
+    this.setState({ error: false })
+  }
+
   handleSubmit = async e => {
     e.preventDefault();
 
@@ -49,23 +54,43 @@ export default class Main extends Component {
 
     this.setState({ loading: true })
 
-    const response = await api.get(`/repos/${newRepo}`);
+    try {
 
-    const data = {
-      name: response.data.full_name
+      const checkRepositoryExist = repositories.find( ({ name }) => name === newRepo);
+
+      if(checkRepositoryExist) {
+        throw new Error('Repositório duplicado');
+      }
+
+      const response = await api.get(`/repos/${newRepo}`);
+
+      const data = {
+        name: response.data.full_name
+      }
+
+      this.setState({
+        repositories: [...repositories, data],
+        newRepo: '',
+        loading: false,
+        error: false
+      })
+    } catch (error) {
+
+      this.setState({
+        loading: false,
+        error: true
+      })
+
+
     }
 
-    this.setState({
-      repositories: [...repositories, data],
-      newRepo: '',
-      loading: false,
-    })
+
 
   }
 
   render() {
 
-    const { newRepo, repositories, loading } = this.state;
+    const { newRepo, repositories, loading, error } = this.state;
 
     return (
       <Container>
@@ -75,11 +100,13 @@ export default class Main extends Component {
         </h1>
 
         <Form onSubmit={this.handleSubmit}>
-          <input
+          <InputText
             type="text"
             placeholder="Adicionar repositórios"
             onChange={this.handleInputChange}
+            onFocus={this.handleFocus}
             value={newRepo}
+            error={error}
           />
 
           <SubmitButton loading={loading}>
