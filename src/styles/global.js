@@ -25,6 +25,16 @@ export default createGlobalStyle`
     font-family: Arial, Helvetica, sans-serif;
   }
 
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
+
+  a {
+    color: #7159c1;
+    text-decoration: none;
+  }
+
   button {
     cursor: pointer;
   }
