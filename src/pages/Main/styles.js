@@ -4,20 +4,16 @@ export const Form = styled.form`
   margin-top: 30px;
   display: flex;
   flex-direction: row;
-
-
 `;
 
 export const InputText = styled.input`
-
   flex: 1;
   border-width: 1px;
   border-style: solid;
-  border-color: ${props => props.error ? 'red' : '#eee'};
+  border-color: ${props => (props.error ? 'red' : '#eee')};
   padding: 10px 15px;
   border-radius: 4px;
   font-size: 16px;
-
 `;
 
 const rotate = keyframes`
@@ -30,9 +26,9 @@ const rotate = keyframes`
   }
 `;
 
-export const SubmitButton = styled.button.attrs( props => ({
+export const SubmitButton = styled.button.attrs(props => ({
   type: 'submit',
-  disabled: props.loading
+  disabled: props.loading,
 }))`
   background: #7159c1;
   border: 0;
@@ -49,15 +45,16 @@ export const SubmitButton = styled.button.attrs( props => ({
     opacity: 0.6;
   }
 
-  ${props => props.loading && css`
-    svg {
-      animation: ${rotate} 2s linear infinite;
-    }
-  `}
+  ${props =>
+    props.loading &&
+    css`
+      svg {
+        animation: ${rotate} 2s linear infinite;
+      }
+    `}
 `;
 
 export const List = styled.ul`
-
   list-style: none;
   margin-top: 30px;
 
@@ -76,7 +73,5 @@ export const List = styled.ul`
       color: #7159c1;
       text-decoration: none;
     }
-
   }
-
 `;

@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 
 export const Error = styled.div`
-
   display: flex;
   flex-direction: column;
 
@@ -11,16 +10,12 @@ export const Error = styled.div`
     font-weight: 600px;
     color: red;
   }
-
-
-`
+`;
 
 export const Owner = styled.header`
-
   display: flex;
   flex-direction: column;
   align-items: center;
-
 
   img {
     max-width: 120px;
@@ -41,11 +36,9 @@ export const Owner = styled.header`
     line-height: 1.4;
     text-align: center;
   }
-
 `;
 
 export const IssueList = styled.ul`
-
   padding-top: 30px;
   margin-top: 10px;
   border-top: 1px solid #eee;
@@ -105,10 +98,37 @@ export const IssueList = styled.ul`
       color: #999;
     }
   }
-`
+`;
+
+export const Paginator = styled.div`
+  display: flex;
+  justify-content: space-between;
+  max-width: 150px;
+  margin: 30px auto 0;
+
+  button {
+    border: 0;
+    width: 50px;
+    height: 50px;
+
+    &:active {
+      opacity: 0.7;
+    }
+
+    &:disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+  }
+
+  svg {
+    color: #7159c1;
+    width: 100%;
+    height: 100%;
+  }
+`;
 
 export const IssueFilter = styled.div`
-
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -134,7 +154,7 @@ export const IssueFilter = styled.div`
     font-weight: bold;
 
     &:active {
-      opacity: .7;
+      opacity: 0.7;
     }
   }
 `;
