@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import api from '../../services/api';
 
 import Container from '../../components/Container'
-import { Loading, Owner, IssueList, Error } from './styles';
+import { Loading, Owner, IssueList, Error, IssueFilter, FilterButton } from './styles';
 
 export default class Repository extends Component {
 
@@ -19,6 +19,20 @@ export default class Repository extends Component {
   state = {
     repository: {},
     issues: [],
+    issuesFilter: [
+      {
+        label: 'Todos',
+        filter: 'all'
+      },
+      {
+        label: 'Abertos',
+        filter: 'open'
+      },
+      {
+        label: 'Fechados',
+        filter: 'closed'
+      },
+    ],
     loading: true,
     error: {
       message: '',
@@ -38,7 +52,6 @@ export default class Repository extends Component {
         api.get(`/repos/${repoName}/issues`, {
           params: {
             state: "open",
-            per_page: 5
           }
 
         })
@@ -62,8 +75,26 @@ export default class Repository extends Component {
 
   }
 
+  handleFilter = async (e) => {
+
+
+    const { match } = this.props;
+    const repoName = decodeURIComponent(match.params.repository);
+
+    const filter = e.target.name;
+
+    const filteredIssues = await api.get(`/repos/${repoName}/issues`, {
+      params: {
+        state: filter
+      }
+    })
+
+    this.setState({ issues: filteredIssues.data })
+
+  }
+
   render() {
-    const { repository, issues, loading, error } = this.state;
+    const { repository, issues, loading, error, issuesFilter } = this.state;
 
     if(error.status) {
       return (
@@ -89,6 +120,16 @@ export default class Repository extends Component {
           <h1>{repository.name}</h1>
           <p>{repository.description}</p>
         </Owner>
+
+        <IssueFilter>
+          <h2>Filtrar</h2>
+          <div>
+            {
+              issuesFilter.map(({ label, filter }) => (
+                <button key={label} onClick={this.handleFilter} name={filter}>{label}</button>)
+            )}
+          </div>
+        </IssueFilter>
 
         <IssueList>
           {
