@@ -45,6 +45,8 @@ export const IssueList = styled.ul`
 
   li {
     display: flex;
+    align-items: center;
+    min-height: 80px;
     padding: 15px 10px;
     border: 1px solid #eee;
     border-radius: 4px;
@@ -103,13 +105,15 @@ export const IssueList = styled.ul`
 export const Paginator = styled.div`
   display: flex;
   justify-content: space-between;
-  max-width: 150px;
+  align-items: center;
+  max-width: 250px;
   margin: 30px auto 0;
 
   button {
     border: 0;
     width: 50px;
     height: 50px;
+    background: transparent;
 
     &:active {
       opacity: 0.7;
@@ -119,6 +123,11 @@ export const Paginator = styled.div`
       opacity: 0.4;
       pointer-events: none;
     }
+  }
+
+  span {
+    font-size: 16px;
+    font-weight: 600;
   }
 
   svg {

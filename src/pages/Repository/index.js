@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { FiArrowLeftCircle, FiArrowRightCircle } from 'react-icons/fi';
+import { FaSadTear } from 'react-icons/fa';
 import PropTypes from 'prop-types';
 import api from '../../services/api';
 
@@ -47,7 +48,6 @@ export default class Repository extends Component {
       status: false,
     },
     page: 1,
-    direction: 'right',
     filter: 'open',
   };
 
@@ -88,9 +88,8 @@ export default class Repository extends Component {
     }
   }
 
-  handleFilter = async e => {
+  handleFilter = async filter => {
     const { repoName } = this.state;
-    const filter = e.target.name;
 
     const filteredIssues = await api.get(`/repos/${repoName}/issues`, {
       params: {
@@ -107,29 +106,28 @@ export default class Repository extends Component {
     });
   };
 
-  handleDirection = direction => {
-    this.setState({ direction });
+  handleDirection = async direction => {
+    const { page } = this.state;
+
+    await this.setState({
+      page: direction === 'prev' ? page - 1 : page + 1,
+    });
     this.handlePagination();
   };
 
   handlePagination = async () => {
-    const { repoName, filter, page, direction } = this.state;
-
-    console.log(direction);
-
-    const calcPage = direction === 'left' ? page - 1 : page + 1;
+    const { repoName, filter, page } = this.state;
 
     const paginationIssues = await api.get(`/repos/${repoName}/issues`, {
       params: {
         state: filter,
         per_page: 5,
-        page: calcPage,
+        page,
       },
     });
 
     this.setState({
       issues: paginationIssues.data,
-      page: calcPage,
     });
   };
 
@@ -173,8 +171,7 @@ export default class Repository extends Component {
             {issuesFilter.map(({ label, filter }) => (
               <button
                 key={label}
-                onClick={this.handleFilter}
-                name={filter}
+                onClick={() => this.handleFilter(filter)}
                 type="button"
               >
                 {label}
@@ -204,11 +201,18 @@ export default class Repository extends Component {
           <button
             type="button"
             disabled={page === 1 && 'disabled'}
-            onClick={() => this.handleDirection('left')}
+            onClick={() => this.handleDirection('prev')}
           >
             <FiArrowLeftCircle />
           </button>
-          <button type="button" onClick={() => this.handleDirection('right')}>
+          <span>
+            {issues.length ? `Página ${page}` : <FaSadTear size={30} />}
+          </span>
+          <button
+            disabled={!issues.length}
+            type="button"
+            onClick={() => this.handleDirection('next')}
+          >
             <FiArrowRightCircle />
           </button>
         </Paginator>
