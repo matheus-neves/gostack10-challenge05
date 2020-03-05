@@ -52,7 +52,7 @@ export default class Main extends Component {
 
     try {
       const checkRepositoryExist = repositories.find(
-        ({ name }) => name === newRepo
+        ({ name }) => name.toLowerCase() === newRepo.toLowerCase()
       );
 
       if (checkRepositoryExist) {

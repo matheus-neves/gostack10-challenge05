@@ -14,6 +14,7 @@ import {
   Error,
   IssueFilter,
   Paginator,
+  LabelIssue,
 } from './styles';
 
 export default class Repository extends Component {
@@ -187,9 +188,21 @@ export default class Repository extends Component {
               <img src={issue.user.avatar_url} alt={issue.user.login} />
               <div>
                 <strong>
-                  <a href={issue.html_url}>{issue.html_url}</a>
+                  <a
+                    className="issueLink"
+                    href={issue.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {issue.html_url}
+                  </a>
                   {issue.labels.map(label => (
-                    <span key={String(label.id)}>{label.name}</span>
+                    <LabelIssue
+                      color={`#${label.color}`}
+                      key={String(label.id)}
+                    >
+                      {label.name}
+                    </LabelIssue>
                   ))}
                 </strong>
                 <p>{issue.user.login}</p>

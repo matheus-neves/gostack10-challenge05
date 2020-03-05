@@ -64,33 +64,26 @@ export const IssueList = styled.ul`
   }
 
   div {
-    flex: 1;
     margin-left: 15px;
 
     strong {
-      font-size: 16px;
+      font-size: 14px;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
 
       a {
         text-decoration: none;
+      }
+
+      .issueLink {
         color: #333;
         margin-right: 10px;
+        word-break: break-all;
 
         &:hover {
           color: #7159c1;
         }
-      }
-
-      span {
-        background: #eee;
-        color: #333;
-        border-radius: 2px;
-        font-size: 12px;
-        font-weight: 600;
-        height: 20px;
-        padding: 3px 4px;
       }
     }
 
@@ -100,6 +93,18 @@ export const IssueList = styled.ul`
       color: #999;
     }
   }
+`;
+
+export const LabelIssue = styled.span`
+  background: ${props => props.color};
+  border: 1px solid #eee;
+  color: #fff;
+  text-shadow: 1px 1px #333;
+  letter-spacing: 0.5px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 6px;
 `;
 
 export const Paginator = styled.div`
@@ -132,8 +137,8 @@ export const Paginator = styled.div`
 
   svg {
     color: #7159c1;
-    width: 100%;
-    height: 100%;
+    width: 30px;
+    height: inherit;
   }
 `;
 
